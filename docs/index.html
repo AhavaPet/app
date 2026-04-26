@@ -6,27 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#00BFA5" />
   <meta name="description" content="AhavaPet - Multi-tenant Pet Management SaaS" />
-  <script>
-    (function () {
-      const params = new URLSearchParams(window.location.search);
-      const backend = params.get("backend");
+<script>
+  (function () {
+    let search = window.location.search;
 
-      let API_BASE_URL = "http://localhost:8080"; // default
+    if (!search && window.location.hash.includes("?")) {
+      search = "?" + window.location.hash.split("?")[1];
+    }
 
-      if (backend) {
-        API_BASE_URL = "https://"+backend;
+    const params = new URLSearchParams(search);
+    let backend = params.get("backend");
+
+    // 🔥 persist backend
+    if (backend) {
+      localStorage.setItem("backend", backend);
+    } else {
+      backend = localStorage.getItem("backend");
+    }
+
+    let API_BASE_URL = "http://localhost:8080";
+
+    if (backend) {
+      if (backend === "local") {
+        API_BASE_URL = "http://localhost:8080";
+      } else if (backend.includes("://")) {
+        API_BASE_URL = backend;
+      } else {
+        API_BASE_URL = "https://" + backend;
       }
+    }
 
-      window.__CONFIG__ = {
-        API_BASE_URL
-      };
-    })();
-  </script>
+    window.__CONFIG__ = { API_BASE_URL };
+
+    console.log("CONFIG:", window.__CONFIG__);
+  })();
+</script>
   <title>AhavaPet - Pet Management</title>
   <script type="module" crossorigin src="/app/assets/index-DQrIRQY4.js"></script>
 <link rel="manifest" href="/app/manifest.webmanifest"></head>
 
 <body>
-<div id="root"></div>
+<div id="root"></div>
+
 </body>
 </html>
