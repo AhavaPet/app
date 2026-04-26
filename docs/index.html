@@ -7,20 +7,32 @@
   <meta name="theme-color" content="#00BFA5" />
   <meta name="description" content="AhavaPet - Multi-tenant Pet Management SaaS" />
 
-  <script>
-    (function () {
-      let API_BASE_URL = "http://localhost:8080"; // default
-      let backend = params.get("backend");
+<script>
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    let backend = params.get("backend");
 
-      if (backend) {
-        localStorage.setItem("backend", "https://" + backend);
-        console.log("Saved backend:", localStorage.getItem("backend"));
-      } else {
-        localStorage.setItem("backend", API_BASE_URL);
-        console.log("Saved default backend:", localStorage.getItem("backend"));
+    let API_BASE_URL = "http://localhost:8080";
+
+    if (backend) {
+      // avoid double https
+      if (!backend.includes("://")) {
+        backend = "https://" + backend;
       }
-    })();
-  </script>
+
+      localStorage.setItem("backend", backend);
+      console.log("Saved backend:", backend);
+    } else {
+      // only set default if nothing stored already
+      if (!localStorage.getItem("backend")) {
+        localStorage.setItem("backend", API_BASE_URL);
+        console.log("Saved default backend:", API_BASE_URL);
+      } else {
+        console.log("Using existing backend:", localStorage.getItem("backend"));
+      }
+    }
+  })();
+</script>
 
   <title>AhavaPet - Pet Management</title>
   <script type="module" crossorigin src="/app/assets/index-yCeaxrfg.js"></script>
