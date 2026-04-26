@@ -10,6 +10,7 @@
   (function () {
     let search = window.location.search;
 
+    // handle hash routing (?backend inside #)
     if (!search && window.location.hash.includes("?")) {
       search = "?" + window.location.hash.split("?")[1];
     }
@@ -17,11 +18,16 @@
     const params = new URLSearchParams(search);
     let backend = params.get("backend");
 
-    // 🔥 persist backend
+    // 🔥 ALWAYS persist when present
     if (backend) {
+      console.log("Saving backend:", backend);
       localStorage.setItem("backend", backend);
-    } else {
+    }
+
+    // 🔥 ALWAYS restore if missing
+    if (!backend) {
       backend = localStorage.getItem("backend");
+      console.log("Restored backend:", backend);
     }
 
     let API_BASE_URL = "http://localhost:8080";
@@ -38,7 +44,7 @@
 
     window.__CONFIG__ = { API_BASE_URL };
 
-    console.log("CONFIG:", window.__CONFIG__);
+    console.log("FINAL CONFIG:", window.__CONFIG__);
   })();
 </script>
   <title>AhavaPet - Pet Management</title>
