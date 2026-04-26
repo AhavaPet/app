@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PetCareHub</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // GitHub Pages SPA redirect.
+      // Redirects /app/<route>?q -> /app/?/<route>~and~q
+      // Then index.html decodes it back to the original URL.
+      (function () {
+        var l = window.location;
+        var repoBase = '/app';
+        var path = l.pathname;
+
+        if (path.indexOf(repoBase + '/') !== 0) {
+          l.replace(repoBase + '/');
+          return;
+        }
+
+        var route = path.slice(repoBase.length); // includes leading '/'
+        var search = l.search ? l.search.slice(1).replace(/&/g, '~and~') : '';
+
+        l.replace(repoBase + '/?/' + route.slice(1) + (search ? '&' + search : '') + l.hash);
+      })();
+    </script>
+  </body>
+</html>
+
