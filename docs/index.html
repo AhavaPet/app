@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/app/paw.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#00BFA5" />
-    <meta name="description" content="AhavaPet - Multi-tenant Pet Management SaaS" />
-    <title>AhavaPet - Pet Management</title>
-    <script type="module" crossorigin src="/app/assets/index-lK14VsNG.js"></script>
-  <link rel="manifest" href="/app/manifest.webmanifest"></head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/app/paw.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#00BFA5" />
+  <meta name="description" content="AhavaPet - Multi-tenant Pet Management SaaS" />
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const backend = params.get("backend");
+
+      let API_BASE_URL = "http://localhost:8080"; // default
+
+      if (backend) {
+        API_BASE_URL = "https:"+backend;
+      }
+
+      window.__CONFIG__ = {
+        API_BASE_URL
+      };
+    })();
+  </script>
+  <title>AhavaPet - Pet Management</title>
+  <script type="module" crossorigin src="/app/assets/index--RJTO7Oi.js"></script>
+<link rel="manifest" href="/app/manifest.webmanifest"></head>
+
+<body>
+<div id="root"></div>
+</body>
 </html>
